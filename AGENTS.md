@@ -1,6 +1,6 @@
 # humanize-korean-formal — 에이전트 작업 규칙
 
-[humanize-korean](https://github.com/epoko77-ai/im-not-ai) v2.3.2(MIT)를 복사해 **공식 용어 검토 단계(Phase 3)**를 더한 Claude Code 스킬 저장소.
+[humanize-korean](https://github.com/epoko77-ai/im-not-ai) v2.3.2(MIT)를 복사해 **공식 용어 검토(Phase 3)**와 **문장 흐름 검토(Phase 4)**를 더한 Claude Code 스킬 저장소.
 산출물은 스킬 폴더 하나: `skill/humanize-korean-formal/` (설치 위치 `~/.claude/skills/humanize-korean-formal/`).
 
 ## 원본과의 관계
@@ -17,10 +17,21 @@
 - 문체(해라체 등)와 문장 끝은 원문을 따른다.
 - 용어 검토는 항상 윤문 **뒤**에 한다.
 
+## 문장 흐름 검토 규칙 (Phase 4 를 고칠 때 지킬 것)
+- 순서는 윤문 → 용어 → 흐름. 흐름 후보 표(F1, F2 …)를 내고 멈춘다. 고른 F 번호만 적용한다.
+- 접속어·연결어미를 넣는 것은 관계를 주장하는 것이다 — 행마다 관계를 적고, 원문이 단정하지 않은 인과는 선택 + "관계 확인 필요".
+- 원본 규칙과 충돌하지 않는다: 문두 접속사를 새로 늘려 한 문단 3개 이상 만들지 않기(H-1), "그리고" 연결은 연결어미로(A-14), "이는"을 새로 쓰지 않기(H-3 — 기존 것은 보존), 연결어미 뒤 쉼표 넣지 않기(C-11). 묶은 문장은 공백 빼고 70자 이하·연결어미 3개 미만(이 스킬 기준, E-5 예방).
+- Phase 3 에서 적용한 용어는 Phase 4 제안에서 그대로 둔다. 검사 실패를 고치느라 제안 형태가 바뀌면 그 행은 보류하고 다시 고르게 한다.
+- 선택 답("권장만")은 선택을 기다리는 가장 최근 표 기준으로 해석한다(용어 표 / 흐름 표, 사이에 질문이 있어도).
+- Phase 3 확정 용어는 `12_protected_terms.txt` 로 넘겨 `--protect` 로 검사한다. 보류 후 재선택은 `21_flow.md` 위에 누적 적용한다.
+- 문장 순서 변경은 같은 문단 안에서만, 항상 선택. 문단 경계·소제목·숫자·문체는 그대로(`check_term_apply.py --mode flow`).
+- 내용 판단이 필요한 곳(시제 불일치, 대상 없는 지시어)은 고치지 말고 알림으로.
+
 ## 검증
 - 단위 테스트: `python3 -m unittest discover tests`
-- 행동 테스트: `tests/fixtures/report_excerpt/input.md` 를 스킬에 넣고 `expected.md` 의 분류 정답·멈춤 조건과 대조한다.
-  SKILL.md 나 `references/formal-terms.md` 를 고치면 다시 돌린다(스킬 문구 변경은 동작 변경이다).
+- 행동 테스트: `tests/fixtures/report_excerpt/`(용어)·`tests/fixtures/flow_excerpt/`(흐름)의 `input.md` 를 스킬에 넣고 `expected.md` 의 정답·멈춤 조건과 대조한다.
+  SKILL.md 나 `references/formal-terms.md`·`flow-review.md` 를 고치면 다시 돌린다(스킬 문구 변경은 동작 변경이다).
+- 참조 파일의 예시에 테스트 픽스처 문장을 쓰지 않는다(답을 미리 알려 주는 셈이다).
 - 예문·픽스처에는 실제 제출물·개인 문서를 넣지 않는다. 가상 예문만 쓴다.
 
 ## 규칙
