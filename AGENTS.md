@@ -1,12 +1,13 @@
 # humanize-korean-formal — 에이전트 작업 규칙
 
-[humanize-korean](https://github.com/epoko77-ai/im-not-ai) v2.3.2(MIT)를 복사해 **공식 용어 검토(Phase 3)**와 **문장 흐름 검토(Phase 4)**를 더한 Claude Code 스킬 저장소.
+[humanize-korean](https://github.com/epoko77-ai/im-not-ai)(MIT, `main` 커밋 `b37e020` 기준)을 복사해 **공식 용어 검토(Phase 3)**와 **문장 흐름 검토(Phase 4)**를 더한 Claude Code 스킬 저장소.
 산출물은 스킬 폴더 하나: `skill/humanize-korean-formal/` (설치 위치 `~/.claude/skills/humanize-korean-formal/`).
 
 ## 원본과의 관계
 - 원본에서 가져온 파일(`references/` 기존 파일, `agents/`, `scripts/` 런타임 9종)은 **원본과 같게 유지**한다.
   고쳐야 하면 최소 범위로 고치고 `skill/humanize-korean-formal/README.md` 「원본과 달라진 점」에 적는다.
 - `LICENSE`(원본 MIT 고지)는 수정·삭제하지 않는다. 스킬 폴더를 어디로 복사하든 함께 간다.
+- 원본을 갱신할 때: 새로 클론한 원본에서 기준 커밋을 정해 기록한다(플러그인 캐시는 최신이 아닐 수 있다). `SKILL.md` 는 직전 기준 커밋을 공통 조상으로 3방향 병합하고, 나머지 복사 파일은 원본으로 덮어쓴 뒤 해시가 같은지 확인한다. 버전 표기가 같아도 태그와 내용이 다를 수 있으니 태그 이름만 믿지 않는다.
 
 ## 공식 용어 검토 규칙 (Phase 3 를 고칠 때 지킬 것)
 - 입력 글에서 비유·구어 표현을 찾아 **후보 표**를 먼저 낸다: 위치 · 현재 표현 · 제안(공식 용어) · 분류

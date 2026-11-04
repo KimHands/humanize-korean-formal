@@ -9,10 +9,10 @@ AI 티를 걷어낸 글에 남아 있는 "뭉갠다", "묻힌다", "우리 데�
 
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-D97757?logo=anthropic&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3_·_stdlib_only-3776AB?logo=python&logoColor=white)
-![Based on](https://img.shields.io/badge/based_on-humanize--korean_v2.3.2-6f42c1)
-![Tests](https://img.shields.io/badge/unit_tests-40_passed-2ea44f)
+![Based on](https://img.shields.io/badge/based_on-im--not--ai%40b37e020-6f42c1)
+[![Tests](https://github.com/KimHands/humanize-korean-formal/actions/workflows/test.yml/badge.svg)](https://github.com/KimHands/humanize-korean-formal/actions/workflows/test.yml)
 ![License](https://img.shields.io/badge/License-MIT-black)
-![Version](https://img.shields.io/badge/version-2.3.2--formal.2-informational)
+![Version](https://img.shields.io/badge/version-2.3.2--formal.3-informational)
 
 </div>
 
@@ -239,8 +239,10 @@ rm -rf ~/.claude/skills/humanize-korean-formal
 
 ```bash
 # 불변 검사 스크립트 단위 테스트
-python3 -m unittest discover tests        # 40 passed
+python3 -m unittest discover tests
 ```
+
+GitHub Actions가 push와 PR마다 Python 3.11·3.12에서 위 명령을 실행합니다. 결과는 맨 위 Tests 배지에서 볼 수 있습니다.
 
 **행동 테스트** — 스킬 문구는 곧 동작이므로, SKILL.md나 `formal-terms.md`·`flow-review.md`를 고치면 가상 입력으로 다시 확인합니다.
 
@@ -278,7 +280,9 @@ humanize-korean-formal/
 │   └── fixtures/
 │       ├── report_excerpt/           용어 검토용 가상 입력 · 기대 결과 · runs/
 │       └── flow_excerpt/             흐름 검토용 가상 입력 · 기대 결과 · runs/
+├── .github/workflows/test.yml        단위 테스트 CI
 ├── docs/review-2026-10-12.md         공개 전 교차 리뷰(Codex) 수용·기각 기록
+├── docs/review-2026-11-04.md         원본 갱신 교차 리뷰(Codex) 수용·기각 기록
 ├── CHANGELOG.md                      버전별 변경 기록
 ├── LICENSE                           MIT (원본 + 변경분 저작권 표시)
 └── AGENTS.md                         이 저장소를 고치는 에이전트용 규칙
@@ -293,16 +297,22 @@ humanize-korean-formal/
 | 구분 | 내용 |
 |------|------|
 | 추가 | Phase 3 공식 용어 검토, Phase 4 문장 흐름 검토, 모드 결정, `formal-terms.md`, `flow-review.md`, `check_term_apply.py`(term·flow 모드) |
-| 수정 | 플러그인이 아닌 단일 스킬 폴더로 설치되도록 `SKILL_ROOT` 규칙과 스크립트 4개의 references 경로(각 한 줄)를 고침 |
-| 수정 | 에이전트를 서브에이전트 타입 대신 `agents/*.md`를 읽는 general-purpose 에이전트로 호출 |
-| 수정 | 트리거를 공식 용어·보고서체 요청으로 좁힘 |
-| 제외 | 유지보수·개발용 에이전트 6종, 빌드·평가 스크립트, 원본 테스트, Codex·Gemini 어댑터 |
+| 수정 | `SKILL.md`만 고침: 플러그인이 아닌 단일 스킬 폴더로 설치되도록 `SKILL_ROOT` 규칙 변경 |
+| 수정 | `SKILL.md`만 고침: 에이전트를 서브에이전트 타입 대신 `agents/*.md`를 읽는 general-purpose 에이전트로 호출 |
+| 수정 | `SKILL.md`만 고침: 트리거를 공식 용어·보고서체 요청으로 좁힘 |
+| 제외 | 유지보수·개발용 에이전트 6종, 빌드·평가 스크립트, 원본 테스트, Codex·Copilot·Gemini 어댑터, Codex 전용 `references/roles/`, 유지보수 전용 `references/taxonomy-candidates.md` |
 
-파일 단위 내역은 [`skill/humanize-korean-formal/README.md`](skill/humanize-korean-formal/README.md)에 있습니다.
+위 추가 파일과 `SKILL.md`를 뺀 복사 파일은 기준 커밋의 원본과 내용이 같습니다. 파일 단위 내역은 [`skill/humanize-korean-formal/README.md`](skill/humanize-korean-formal/README.md)에 있습니다.
+
+**알려진 한계** — 원본 게이트의 각주 검사에 대해 다음 오탐 이슈가 원본 저장소에 열려 있습니다. 보고서에 흔한 형식이지만, 원본 파일을 같게 유지하는 규칙에 따라 이 저장소에서 따로 고치지 않았습니다. 윤문을 함께 요청할 때만 해당합니다.
+
+- [#176](https://github.com/epoko77-ai/im-not-ai/issues/176): `1) 2) 3)` 번호 목록을 각주 정의로 읽음
+- [#177](https://github.com/epoko77-ai/im-not-ai/issues/177): 괄호 안 소수 `(0.2)`를 각주 표시로 읽음
 
 ---
 
 ## 라이선스와 출처
 
-- 원본: [epoko77-ai/im-not-ai](https://github.com/epoko77-ai/im-not-ai/tree/v2.3.2) — humanize-korean **v2.3.2 태그** 기준, © 2026 epoko77-ai, [MIT License](skill/humanize-korean-formal/LICENSE)
+- 원본: [epoko77-ai/im-not-ai](https://github.com/epoko77-ai/im-not-ai) — humanize-korean **`main` 커밋 [`b37e020`](https://github.com/epoko77-ai/im-not-ai/tree/b37e0206d31fffd9149bf57168d4d62eb2086bee)** 기준(2026-10-12), © 2026 epoko77-ai, [MIT License](skill/humanize-korean-formal/LICENSE)
+- 원본에 v2.3.2 이후 새 릴리스 태그가 없어 커밋으로 기준을 표시합니다. 원본 파일의 버전 표기는 여전히 2.3.2지만, 내용은 v2.3.2 태그보다 앞서 있습니다.
 - 이 저장소의 변경분도 MIT로 배포합니다 — [루트 LICENSE](LICENSE). 스킬 폴더를 복사·재배포할 때는 폴더 안의 `LICENSE`를 함께 포함해 주세요.
