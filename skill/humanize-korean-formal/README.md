@@ -1,6 +1,6 @@
 # humanize-korean-formal
 
-한글 AI 티 제거 스킬 **humanize-korean v2.3.2**에 **공식 용어 검토(Phase 3)**와 **문장 흐름 검토(Phase 4)**를 더한 사용자 스킬.
+한글 AI 티 제거 스킬 **humanize-korean**(`main` 커밋 `b37e020`)에 **공식 용어 검토(Phase 3)**와 **문장 흐름 검토(Phase 4)**를 더한 사용자 스킬.
 
 > **비공식 파생본입니다.** 원저작자(epoko77-ai)와 관계가 없으며, 원저작자가 제공하거나 검토한 변형이 아닙니다.
 > 저장소: https://github.com/KimHands/humanize-korean-formal
@@ -8,7 +8,8 @@
 
 ## 출처와 라이선스
 
-- 원본: im-not-ai 마켓플레이스 `humanize-korean` 플러그인 v2.3.2 (저작권자 epoko77-ai) — 기준 스냅샷 https://github.com/epoko77-ai/im-not-ai/tree/v2.3.2
+- 원본: im-not-ai `humanize-korean` (저작권자 epoko77-ai) — 기준 스냅샷 `main` 커밋 `b37e020`(2026-10-12) https://github.com/epoko77-ai/im-not-ai/tree/b37e0206d31fffd9149bf57168d4d62eb2086bee
+- 원본에 v2.3.2 이후 새 태그가 없어 커밋으로 표시한다. 원본의 버전 표기는 2.3.2 그대로지만 내용은 그 태그보다 앞서 있다.
 - 라이선스: **MIT** — 원문은 이 폴더의 `LICENSE` (원본 그대로, 수정하지 않음)
 - MIT 조건: 사용·복사·수정·병합·배포·재라이선스·판매 모두 허용. 단 **사본이나 상당 부분을 배포할 때는 저작권 고지와 허가 문구(`LICENSE`)를 함께 포함해야 한다.** 보증 없음.
 - 이 폴더를 다른 곳에 복사·공유할 때 `LICENSE` 를 빼지 않는다.
@@ -18,12 +19,12 @@
 | 원본 경로 (플러그인 루트 기준) | 여기 | 수정 |
 |---|---|---|
 | `skills/humanize-korean/SKILL.md` | `SKILL.md` | 있음 — 아래 참조 |
-| `skills/humanize-korean/references/*` | `references/*` | 없음 (파일 추가만) |
-| `scripts/` 런타임 9종 | `scripts/` | references 경로 한 줄씩(4개 파일) |
+| `skills/humanize-korean/references/*` (아래 제외분 빼고) | `references/*` | 없음 (파일 추가만) |
+| `scripts/` 런타임 9종 | `scripts/` | 없음 (파일 추가만) |
 | `agents/humanize-{monolith,diagnostician,finalizer}.md` | `agents/` | 없음 |
 | `LICENSE` | `LICENSE` | 없음 |
 
-가져오지 않은 것: 유지보수·개발용 에이전트 6종, 빌드·평가 스크립트, `tests/`, 설치 스크립트, 명령(`commands/`), Codex·Gemini 어댑터.
+가져오지 않은 것: 유지보수·개발용 에이전트 6종, 빌드·평가 스크립트, `tests/`, 설치 스크립트, 명령(`commands/`), Codex·Copilot·Gemini 어댑터, `references/roles/`(Codex 어댑터 전용), `references/taxonomy-candidates.md`(유지보수 에이전트 전용).
 
 ## 원본과 달라진 점
 
@@ -38,7 +39,7 @@
 3. **모드 결정** — "용어 + 흐름" / "흐름 검토만" / "윤문 + (용어·흐름)". 순서는 윤문 → 용어 → 흐름으로 고정.
 4. **설치 구조** — 플러그인이 아니라 `~/.claude/skills/humanize-korean-formal/` 한 폴더에 설치된다.
    - `SKILL_ROOT` 를 `.claude-plugin/` 을 찾아 올라가는 방식에서 스킬 폴더 자체로 바꿨다.
-   - 스크립트 4개(`prepare_monolith_input`·`verify_gates`·`restore_modality`·`verify_change_rate`)의 references 경로를 `../skills/humanize-korean/references` → `../references` 로 바꿨다.
+   - 스크립트는 고치지 않았다. 원본이 `scripts/` 옆 `references/` 를 찾는 경로 폴백을 갖추어, 이전에 고쳤던 4개 파일을 원본과 같게 되돌렸다.
    - 에이전트는 서브에이전트 타입으로 등록되지 않으므로 `general-purpose` 에이전트에게 `agents/*.md` 를 읽혀 실행한다.
 5. **트리거** — 공식 용어·보고서체·문장 흐름 요청에만 뜨도록 description 을 좁혔다. 일반 AI 티 제거는 원본 humanize-korean 이 맡는다.
 
