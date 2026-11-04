@@ -12,7 +12,7 @@ AI 티를 걷어낸 글에 남아 있는 "뭉갠다", "묻힌다", "우리 데�
 ![Based on](https://img.shields.io/badge/based_on-im--not--ai%40b37e020-6f42c1)
 [![Tests](https://github.com/KimHands/humanize-korean-formal/actions/workflows/test.yml/badge.svg)](https://github.com/KimHands/humanize-korean-formal/actions/workflows/test.yml)
 ![License](https://img.shields.io/badge/License-MIT-black)
-![Version](https://img.shields.io/badge/version-2.3.2--formal.3-informational)
+![Version](https://img.shields.io/badge/version-2.3.2--formal.4-informational)
 
 </div>
 
@@ -129,7 +129,7 @@ E는 **좁게** 판정합니다. 정의대로 쓰지 않았거나 확신이 없�
 | F3 | 증차가 필요하다. (근거 두 문장) | (근거 두 문장) 증차가 필요하다. | F-순서 · 없음 | 선택 |
 | F4 | 또한 학생지원팀은 … 갱신한다. 또한 시설팀은 … 점검한다. | 학생지원팀은 … 갱신하고 시설팀은 … 점검한다. | F-접속(삭제) · 나열 | 권장 |
 
-고치려면 내용 판단이 필요한 곳(시제가 다른 두 문장, 가리키는 대상이 글에 없는 "이 목록")은 표에 넣지 않고 **알림**으로만 알려 줍니다.
+고치려면 내용 판단이 필요한 곳(시제가 다른 두 문장, 가리키는 대상이 글에 없는 "이 목록", 묶거나 옮기면 여러 해석 중 하나로 뜻이 정해지는 제안)은 표에 넣지 않고 **알림**으로만 알려 줍니다.
 
 **원본 규칙과 맞춥니다.** 원본 humanize-korean은 문두 접속사 과다(H-1), "그리고" 연결(A-14), "이는" 반복(H-3), 연결어미 뒤 쉼표(C-11)를 AI 티로 봅니다. 그래서 흐름 검토는 접속사를 몰아 넣지 않고 연결어미로 먼저 잇습니다. 적용 뒤 검사는 문두 접속사를 새로 늘려 한 문단 3개 이상이 되는 것, "이는"이 새로 늘어나는 것, 연결어미 뒤 쉼표가 새로 생기는 것, 기존보다 길면서 공백 빼고 70자를 넘는 새 문장, 연결어미가 3개 이상 이어진 새 문장을 잡습니다. 원문의 접속사는 몰려 있을 때 **빼는 제안**(F-접속)으로만 손대고, 원문의 "이는"은 건드리지 않습니다.
 판정 기준 전문은 [`references/flow-review.md`](skill/humanize-korean-formal/references/flow-review.md)에 있습니다.
@@ -282,7 +282,7 @@ humanize-korean-formal/
 │       └── flow_excerpt/             흐름 검토용 가상 입력 · 기대 결과 · runs/
 ├── .github/workflows/test.yml        단위 테스트 CI
 ├── docs/review-2026-10-12.md         공개 전 교차 리뷰(Codex) 수용·기각 기록
-├── docs/review-2026-11-04.md         원본 갱신 교차 리뷰(Codex) 수용·기각 기록
+├── docs/review-2026-11-04.md         원본 갱신·흐름 규칙 교차 리뷰(Codex) 수용·기각 기록
 ├── CHANGELOG.md                      버전별 변경 기록
 ├── LICENSE                           MIT (원본 + 변경분 저작권 표시)
 └── AGENTS.md                         이 저장소를 고치는 에이전트용 규칙
@@ -304,10 +304,10 @@ humanize-korean-formal/
 
 위 추가 파일과 `SKILL.md`를 뺀 복사 파일은 기준 커밋의 원본과 내용이 같습니다. 파일 단위 내역은 [`skill/humanize-korean-formal/README.md`](skill/humanize-korean-formal/README.md)에 있습니다.
 
-**알려진 한계** — 원본 게이트의 각주 검사에 대해 다음 오탐 이슈가 원본 저장소에 열려 있습니다. 보고서에 흔한 형식이지만, 원본 파일을 같게 유지하는 규칙에 따라 이 저장소에서 따로 고치지 않았습니다. 윤문을 함께 요청할 때만 해당합니다.
+**알려진 한계** — 원본 게이트의 각주 검사에 대해 다음 오탐 이슈가 원본 저장소에 열려 있습니다(2026-11-04 기준). 보고서에 흔한 형식이지만, 원본 파일을 같게 유지하는 규칙에 따라 이 저장소에서 따로 고치지 않았습니다. 윤문을 함께 요청할 때만 해당합니다.
 
-- [#176](https://github.com/epoko77-ai/im-not-ai/issues/176): `1) 2) 3)` 번호 목록을 각주 정의로 읽음
-- [#177](https://github.com/epoko77-ai/im-not-ai/issues/177): 괄호 안 소수 `(0.2)`를 각주 표시로 읽음
+- [#176](https://github.com/epoko77-ai/im-not-ai/issues/176): `1) 2) 3)` 번호 목록을 각주 정의로 읽음. 가상 입력으로 재현했고, 게이트가 FAIL 3건과 WARN을 냅니다.
+- [#177](https://github.com/epoko77-ai/im-not-ai/issues/177): 괄호 안 소수 `(0.2)`를 각주 표시로 읽음. 간단한 입력으로는 재현되지 않았습니다.
 
 ---
 
